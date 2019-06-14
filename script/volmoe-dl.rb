@@ -4,6 +4,7 @@ require "fileutils"
 
 url_path = ARGV[0]
 output_dir = ARGV[1] || "output"
+cookies_path = ARGV[2] || "cookies.txt"
 
 FileUtils.mkdir_p(output_dir)
 CSV.foreach(url_path, col_sep: "\t", headers: false) do |row|
