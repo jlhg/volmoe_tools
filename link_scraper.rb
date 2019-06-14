@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 require "nokogiri"
 require "openssl"
-require "pry"
 
 format = ARGV[0]
 url = ARGV[1]
