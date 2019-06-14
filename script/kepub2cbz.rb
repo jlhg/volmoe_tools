@@ -14,5 +14,6 @@ Dir["#{input_dir}/**/*.kepub.epub"].each do |f|
     `cd #{dir} && unzip '#{dir}/#{filename}'`
     `rm -f #{dir}/image/createby.png #{dir}/image/logo-mark.png`
     `zip -r -j '#{output_path}/#{basename}' #{dir}/image`
+    puts "converted: #{f}"
   end
 end
