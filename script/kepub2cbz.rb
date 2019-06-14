@@ -1,13 +1,16 @@
 #!/usr/bin/env ruby
+require "tempfile"
 
 input_dir = ARGV[0]
 output_dir = ARGV[1]
-
 output_path = File.expand_path output_dir
 Dir["#{input_dir}/**/*.kepub.epub"].each do |f|
-  input_path = File.expand_path f
-  output_filename = File.basename(f, ".kepub.epub") + ".zip"
-  output_filename_cbz = File.basename(f, ".kepub.epub") + ".cbz"
-  `docker run --rm -v #{input_path}:/input.kepub.epub -v #{output_path}:/output jlhg/calibre-docker ebook-convert /input.kepub.epub '/output/#{output_filename}'`
-  `mv '#{output_path}/#{output_filename}' '#{output_path}/#{output_filename_cbz}'`
+  filename = File.basename f
+  basename = File.basename(f, ".kepub.epub") + ".cbz"
+  Dir.mktmpdir do |dir|
+    `cp #{f} #{dir}`
+    `cd #{dir} && unzip '#{dir}/#{filename}'`
+    `rm -f #{dir}/image/createby.png #{dir}/image/logo-mark.png`
+    `zip -r -j #{output_path}/#{basename} #{dir}/image`
+  end
 end
