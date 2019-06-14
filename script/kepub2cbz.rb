@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
 require "tempfile"
+require "fileutils"
 
 input_dir = ARGV[0]
 output_dir = ARGV[1]
+FileUtils.mkdir_p(output_dir)
 output_path = File.expand_path output_dir
 Dir["#{input_dir}/**/*.kepub.epub"].each do |f|
   filename = File.basename f
