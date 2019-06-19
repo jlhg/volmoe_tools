@@ -17,7 +17,7 @@ when "epub"
     book1_url = td[1].css("a").select { |d| d.text == "VIP下载" }.first.attributes["href"].text
     puts [book1_title, book1_url].join("\t") if book1_title
 
-    next if td[3].nil?
+    next if td[3].nil? || td[4].nil?
 
     book2_title = td[3].css("b").text.gsub(/ +/, "")
     book2_url = td[4].css("a").select { |d| d.text == "VIP下载" }.first.attributes["href"].text
