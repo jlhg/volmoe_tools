@@ -14,7 +14,10 @@ Dir["#{input_dir}/**/*.kepub.epub"].each do |file_path|
   f = Shellwords.escape(file_path)
   pool.post do
     filename = File.basename(f)
-    basename = File.basename(f, ".kepub.epub") + ".cbz"
+    basename = File.basename(file_path, ".kepub.epub") + ".cbz"
+    basename.gsub!("'", "")
+    basename.gsub!(":", "")
+    basename.gsub!("\"", "")
     Dir.mktmpdir do |dir|
       `cp #{f} #{dir}`
       `cd #{dir} && unzip #{dir}/#{filename}`
